@@ -9,7 +9,7 @@ angular.module('dataTracking')
         $routeProvider
             .when('/', {
                 templateUrl: 'src/data/dataController.html',
-                controller: 'graphCtrl'
+                controller: 'sensorStatus'
             });
     });
 
