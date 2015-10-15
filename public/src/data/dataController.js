@@ -12,7 +12,6 @@ angular.module('dataTracking')
         //    })
 
         $socket.on('update', function (data){
-            $scope.sensordata=data;
             fetchData();
         });
 

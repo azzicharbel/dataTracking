@@ -4,7 +4,10 @@
 'use strict';
 
 angular.module('dataTracking')
-    .controller('mainCtrl', function($scope, $location, $http){
+    .controller('mainCtrl', function($scope, $location, $http, SensorData, $socket){
 
+        $socket.on('update', function (data){
+            $scope.sensordata=data;
+        });
 
 });
