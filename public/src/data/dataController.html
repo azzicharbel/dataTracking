@@ -1,7 +1,51 @@
-<nvd3-line-chart
+<!--http://cmaurer.github.io/angularjs-nvd3-directives/axis.formatting.html-->
+<!--https://github.com/mbostock/d3/wiki/SVG-Axes#tickFormat-->
+
+<!--<nvd3-line-chart-->
+        <!--data="exampleData"-->
+        <!--showXAxis="true"-->
+        <!--showYAxis="true"-->
+        <!--tooltips="true"-->
+        <!--interactive="true">-->
+<!--</nvd3-line-chart>-->
+
+<nvd3-cumulative-line-chart
         data="exampleData"
+        tooltips="true"
         showXAxis="true"
         showYAxis="true"
-        tooltips="true"
-        interactive="true">
-</nvd3-line-chart>
+        showLegend="true"
+        interactive="true"
+        xAxisTickFormat="xAxisTickFormat()"
+        xAxisTickValues="xAxisTicks()"
+        x="xFunction()"
+        yAxisLabel="Sensor Status"
+        xAxisLabel="Time">
+        <svg></svg>
+</nvd3-cumulative-line-chart>
+
+<!--y="yFunction()"-->
+<!--interpolate="step"-->
+<!--x="xFunction()"-->
+<!--forcex="[0]"-->
+<!--List of numbers to Force into the X scale (ie. 0, or a max / min, etc.). The numbers tell the d3.js the values to use in the scale, rather than d3.js determining the values.-->
+
+<!--Datatype: Array of Numbers (i.e. [0, 50])-->
+<!--forcex="[0]"-->
+
+<!--<nvd3-cumulative-line-chart-->
+        <!--data="exampleData"-->
+        <!--width="650"-->
+        <!--height="400"-->
+        <!--showXAxis="true"-->
+        <!--showYAxis="true"-->
+        <!--tooltips="true"-->
+        <!--interactive="true"-->
+        <!--x="xFunction()"-->
+        <!--y="yFunction()"-->
+        <!--yAxisTickFormat="yAxisTickFormatFunction()"-->
+        <!--xAxisTickFormat="xAxisTickFormatFunction()"-->
+        <!--margin="{left:70,top:70,bottom:70,right:125}">-->
+        <!--<svg></svg>-->
+<!--</nvd3-cumulative-line-chart>-->
+<!--</div>-->
