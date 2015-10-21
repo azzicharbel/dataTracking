@@ -18,11 +18,11 @@ exports.getSensorData = function (req,res){
     if (sensorData=="HHHHHHHHHHHHHHHH" || sensorData=="LLLLLLLLLLLLLLLL") {
 
         if (sensorData=="HHHHHHHHHHHHHHHH") {
-            saveData = "high";
+            saveData = "ON";
             console.log(saveData);
         }
         else{
-            saveData="low";
+            saveData="OFF";
             console.log(saveData);
         }
         var newData = new DbSensorData({

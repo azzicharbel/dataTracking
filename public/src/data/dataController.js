@@ -18,6 +18,7 @@ angular.module('dataTracking')
             scaleSteps:1,
             scaleStartValue:0,
             scaleStepWidth:1,
+            //responsive:false,
             //scaleFontColor : "red",
             scaleLabel: function (valuePayload) {
                 if (Number(valuePayload.value) === 0)
@@ -36,26 +37,31 @@ angular.module('dataTracking')
 
         //moment().format();
         var liveData = [];
-        var liveDates = [];
+        var liveClock = [];
         $scope.count = 0;
 
         $socket.on('update', function (data){
 
             //var date = data.date;     //date data received
             var dateRecieved = new Date();
+            var dateStr = dateRecieved.getDate() + "/" +  dateRecieved.getMonth()+1 + '/' + dateRecieved.getFullYear();
+            var clockStr = dateRecieved.getHours() + ":" +  dateRecieved.getMinutes() + ':' +dateRecieved.getSeconds();
+
+            console.log('date' + dateStr);
+            console.log('clock' + clockStr);
             var status =  data.status //high or low
             //console.log ("current date = " + date);
             //
-            if (status === 'high') {
+            if (status === 'ON') {
                 liveData.push(1);
             }
-            else if (status === 'low'){
+            else if (status === 'OFF'){
                 liveData.push(0);
             }
 
-            liveDates.push(dateRecieved);
-            console.log(liveData);
-            console.log(liveDates);
+            liveClock.push(clockStr);
+            //console.log(liveData);
+            //console.log(liveDates);
             fetchData();
         });
 
@@ -71,8 +77,8 @@ angular.module('dataTracking')
         });
 
         function fetchData() {
-            $scope.labels = liveDates;
-            $scope.series = ['Light Status'];
+            $scope.labels = liveClock;
+            $scope.series = ['Time'];
 
             $scope.data = [
                 liveData

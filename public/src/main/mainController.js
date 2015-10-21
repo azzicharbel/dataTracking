@@ -7,7 +7,16 @@ angular.module('dataTracking')
     .controller('mainCtrl', function($scope, $location, $http, SensorData, $socket){
 
         $socket.on('update', function (data){
-            $scope.sensordata=data.status;
+            $scope.sensordata= data.status;
+            changeStatusColor();
+
         });
 
+        function changeStatusColor(){
+            //if ($scope.sensordata= "ON"){
+            //    $("#statusColor" ).css( "color", "green" );
+            //}else {
+            //    $("#statusColor" ).css( "color", "red" );
+            //}
+        }
 });
