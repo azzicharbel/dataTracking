@@ -6,47 +6,61 @@ var DbSensorData = require ('../../../ModelDb/dbSchema');
 exports.getSensorData = function (req,res){
     var sensorData = req.params.id;
     var dateReceived = new Date();
+    var saveData ='unknown';
+
     console.log("Sensor Data = ");
     console.log(sensorData);
-
     console.log("Data date received = ");
     console.log(dateReceived);
 
     res.json(sensorData);
 
-    var newData = new DbSensorData ({
-        status : sensorData,
-        dateReceived : dateReceived
-    })
+    if (sensorData=="HHHHHHHHHHHHHHHH" || sensorData=="LLLLLLLLLLLLLLLL") {
 
-    newData.save(function (err){
-       if (err)
-           console.log("There was a problem adding the information to the database.")
-        console.log("Data was saved succesffuly in dataTracking");
+        if (sensorData=="HHHHHHHHHHHHHHHH") {
+            saveData = "ON";
+            console.log(saveData);
+        }
+        else{
+            saveData="OFF";
+            console.log(saveData);
+        }
+        var newData = new DbSensorData({
+            status: saveData,
+            dateReceived: dateReceived
+        })
+
+        newData.save(function (err) {
+            if (err)
+                console.log("There was a problem adding the information to the database.")
+            console.log(saveData + " Data was saved succesffuly in dataTracking");
+        });
+
+        //////call the controller with the updated data
+        var io = req.app.get('socketio');
+        io.sockets.emit('update', {status :saveData, date: dateReceived});
+    }
+    else {
+        console.log("Invalid data and cannot be added to the database");
+    }
+};
+
+exports.getLastDataEntry = function(req,res){
+
+    console.log('inFind');
+    DbSensorData.find().sort( { _id : -1 } ).limit(1).exec(function(err, data){
+        console.log("get last data" + data);
+        res.json(data);
+        return data;
     });
 
-    // Set our internal DB variable
-    //var db = req.db;
-
-    //insert data into database dataTracking, to the collection sensorData
-    //db.sensorData.insert({
-    //    "status": sensorData,
-    //    "dateReceived": dateReceived
-    //}, function (err, doc) {
-    //    if (err) {
-    //        // If it failed, return error
-    //        //res.send("There was a problem adding the information to the database.");
-    //        console.log("There was a problem adding the information to the database.")
-    //    }
-    //    else {
-    //        // And forward to success page
-    //        //res.send("Date save succesffuly");
-    //        console.log("Data was saved succesffuly in dataTracking");
-    //    }
+    //DbSensorData.find().skip(DbSensorData.count()).exec(function(err, datas){
+    //    console.log("get last data" + datas);
     //});
 
-    //////call the controller with the updated data
-    var io = req.app.get('socketio');
-    io.sockets.emit('update', sensorData);
 
-};
+    //if (story.lines.length &&
+    //    story.lines[story.lines.length-1].user === socket.username) {
+    //    // error, same user is trying to enter another line
+    //}
+}

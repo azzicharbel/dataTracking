@@ -1,11 +1,6 @@
-<div class="container">
-<P>{{sensordata}}</P>
-</div>
-
-<nvd3-line-chart
-        data="exampleData"
-        showXAxis="true"
-        showYAxis="true"
-        tooltips="true"
-        interactive="true">
-</nvd3-line-chart>
+<!--<div style="width:720px; height: 320px;">-->
+<canvas id="bar" class="chart chart-bar" chart-data="data"
+        chart-labels="labels" chart-legend="true" chart-series="series"
+        chart-click="onClick" >
+</canvas>
+<!--</div>-->
