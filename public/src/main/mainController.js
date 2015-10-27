@@ -9,7 +9,7 @@ angular.module('dataTracking')
         // to make sensdata accessible by the child controller (s)
         $scope.parentobj = {};
         $scope.parentobj.sensordata= "";
-        
+
         $scope.$watch('parentobj.sensordata', function() {
             console.log('hey, sensor data is ' + $scope.parentobj.sensordata );
             if ($scope.parentobj.sensordata === "ON"){
