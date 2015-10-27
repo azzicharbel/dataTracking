@@ -30,38 +30,50 @@ angular.module('dataTracking')
         })
     }])
     .controller('sensorStatus', function($scope, $location, $http, SensorData, $socket){
-        //SensorData.getSensorData()
-        //    .success(function (data){
-        //        $scope.sensordata = 'sensor data:' + data;
-        //    })
 
-        //moment().format();
         var liveData = [];
         var liveClock = [];
-        $scope.count = 0;
+
+        /////////// This is Loaded First, until data start coming
+        var fetchLastDataEntry = function (){
+            SensorData.getLastDataEntry()
+                .success(function (data){
+                    console.log('data in controller' + JSON.stringify(data))
+                    console.log(data[0].dateReceived);
+                    var date = Date.parse(data[0].dateReceived); //parse the ISO date return from mongoDb to date in milliseconds;
+                    date = new Date(date);
+                    date = formatDate(date);
+                    console.log('parsed date = ' + date);
+
+                    pushData(data[0].status, date);
+                    fetchData();
+
+                })
+                .error( function (error){
+                    console.log(error + "Error in fetching the latest status ");
+                })
+        }
+
+        fetchLastDataEntry();
+
+        //moment().format();
 
         $socket.on('update', function (data){
 
             //var date = data.date;     //date data received
             var dateRecieved = new Date();
-            var dateStr = dateRecieved.getDate() + "/" +  dateRecieved.getMonth()+1 + '/' + dateRecieved.getFullYear();
-            var clockStr = dateRecieved.getHours() + ":" +  dateRecieved.getMinutes() + ':' +dateRecieved.getSeconds();
+            //var dateStr = dateRecieved.getDate() + "/" +  dateRecieved.getMonth()+1 + '/' + dateRecieved.getFullYear();
+            var clockStr = formatDate(dateRecieved);
 
-            console.log('date' + dateStr);
+            //console.log('date' + dateStr);
             console.log('clock' + clockStr);
             var status =  data.status //high or low
-            //console.log ("current date = " + date);
-            //
-            if (status === 'ON') {
-                liveData.push(1);
-            }
-            else if (status === 'OFF'){
-                liveData.push(0);
-            }
 
-            liveClock.push(clockStr);
+            //console.log ("current date = " + date);
             //console.log(liveData);
             //console.log(liveDates);
+
+            pushData(status, clockStr);
             fetchData();
         });
 
@@ -76,6 +88,25 @@ angular.module('dataTracking')
             chart.update();
         });
 
+        function formatDate(date){
+            return date.getHours() + ":" +  date.getMinutes() + ':' +date.getSeconds();
+        }
+
+        function pushData(status, date){
+            //change the value of sensordata in the mainrCtrl (parent controller)
+            $scope.parentobj.sensordata = status;
+
+            if (status === 'ON') {
+                liveData.push(1);
+
+            }
+            else if (status === 'OFF'){
+                liveData.push(0);
+            }
+
+            liveClock.push(date);
+        }
+
         function fetchData() {
             $scope.labels = liveClock;
             $scope.series = ['Time'];
@@ -84,6 +115,5 @@ angular.module('dataTracking')
                 liveData
             ];
         }
-
     });
 
