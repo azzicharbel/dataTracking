@@ -8,7 +8,8 @@ var app = angular.module('dataTracking', [
     'ngRoute',
     'appServices',
     'socket.io',
-    'chart.js'
+    'chart.js',
+    'ui.bootstrap'
 ]);
 
 var appServices = angular.module('appServices', []);

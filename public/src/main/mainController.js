@@ -21,4 +21,36 @@ angular.module('dataTracking')
             }
         });
 
+
+        ////////////////////////////////////// TIMEPICKER
+        //$scope.event = {
+        //    startDate: new Date()
+        //};
+
+        $scope.startTime = new Date();
+        $scope.endTime = new Date();
+
+        $scope.changed = function () {
+
+            $scope.start_time = $scope.startTime;
+
+            $scope.end_time = {
+                hour: $scope.endTime.getHours(),
+                min: $scope.endTime.getMinutes()
+            };
+
+            console.log("start = " + $scope.start_time + "end = " +  $scope.end_time.min);
+        };
+
+        $scope.config = {
+            showMeridian: true,
+            hourSteps: 1,
+            minuteSteps: 15
+        };
+
+        //$scope.clicked = function(e) {
+        //    e.preventDefault();
+        //    e.stopPropagation();
+        //};
+        //////////////////////////////////////////////
 });
