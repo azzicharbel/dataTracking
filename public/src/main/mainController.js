@@ -53,4 +53,40 @@ angular.module('dataTracking')
         //    e.stopPropagation();
         //};
         //////////////////////////////////////////////
-});
+
+})
+
+    .directive('bootstrapSwitch', [
+        //http://www.bootstrap-switch.org/methods.html
+        function() {
+            return {
+                restrict: 'A',
+                require: '?ngModel',
+                link: function(scope, element, attrs, ngModel) {
+                    element.bootstrapSwitch();
+
+                    element.on('switchChange.bootstrapSwitch', function(event, state) {
+                        if (ngModel) {
+                            scope.$apply(function() {
+                                console.log(ngModel);
+                                ngModel.$setViewValue(state);
+                            });
+                        }
+                    });
+
+                    scope.$watch(attrs.ngModel, function(newValue, oldValue) {
+                        if (newValue) {
+                            $( "fieldset" ).prop( "disabled", false );
+                            element.bootstrapSwitch('state', true, true);
+                            console.log("ON STATE");
+                        } else {
+                            console.log("OFF STATE");
+                            console.log(attrs.ngModel);
+                            $( "fieldset" ).prop( "disabled", true );
+                            element.bootstrapSwitch('state', false, true);
+                        }
+                    });
+                }
+            };
+        }
+]);

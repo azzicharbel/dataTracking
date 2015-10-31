@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Zigbee IoT</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap-switch.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <!--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="stylesheets/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -18,6 +18,7 @@
     <script src="./javascripts/socket.io-1.3.2.js"></script>
     <script src="./javascripts/angular-socket.js"></script>
     <script src="./javascripts/moment.js"></script>
+    <script src="./javascripts/bootstrap-switch.js"></script>
 
     <script src="app.js"></script>
     <script src="./src/main/mainController.js"></script>
@@ -75,14 +76,31 @@
         <!--<timepicker hour-step="config.hourSteps" minute-step="config.minuteSteps" show-meridian="config.ShowMeridian"></timepicker>-->
         <!--</div>-->
 
-        <div class ="row">
-            <div class=" col-lg-2 col-md-2 col-sm-2 col-xs-2 col-md-offset-2">
-                <timepicker data-ng-model="startTime" data-ng-change="changed()" show-meridian='showMeridian'/>
+        <!--col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2-->
+
+        <div style="border-right:1px solid #000">
+            <div class ="row" >
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <input  type="checkbox" ng-model="start.timer" bootstrap-switch />
+                </div>
             </div>
-            <div class=" col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <timepicker data-ng-model="endTime" data-ng-change="changed()" show-meridian='showMeridian'/>
+
+            <div class ="row">
+                <div class=" col-lg-2 col-md-2 col-sm-2 col-xs-2" >
+                    <label> Between </label>
+                    <fieldset> <!--<fieldset>></fieldset> was added to control the disabling and enabling of timepicker-->
+                        <timepicker data-ng-model="startTime" data-ng-change="changed()" show-meridian='showMeridian' id="startPeriod"/>
+                    </fieldset>
+                </div>
+                <div class=" col-lg-2 col-md-2 col-sm-2 col-xs-2" id="endPeriod">
+                    <label> And </label>
+                    <fieldset>
+                        <timepicker data-ng-model="endTime" data-ng-change="changed()" show-meridian='showMeridian'/>
+                    </fieldset>
+                </div>
             </div>
         </div>
+        <hr>
 
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" id="statusColor" style = "margin-top: 12%">
