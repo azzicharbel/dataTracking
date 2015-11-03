@@ -42,9 +42,12 @@ angular.module('dataTracking')
                     console.log(data[0].dateReceived);
                     var date = Date.parse(data[0].dateReceived); //parse the ISO date return from mongoDb to date in milliseconds;
                     date = new Date(date);
+
+                    //e.g Mon Nov 02 2015
+                    $scope.dateString = date.toDateString();
+
                     date = formatDate(date);
                     console.log('parsed date = ' + date);
-
                     pushData(data[0].status, date);
                     fetchData();
 
@@ -60,18 +63,20 @@ angular.module('dataTracking')
 
         $socket.on('update', function (data){
 
-            //var date = data.date;     //date data received
+
             var dateRecieved = new Date();
+
+            //e.g Mon Nov 02 2015
+            var dateStr = dateRecieved.toDateString();
+            checkLastDataEntry(dateStr);
+            //checkLastDataEntry(new Date('2011-04-11'));
+            $scope.dateString = dateRecieved.toDateString();
+
             //var dateStr = dateRecieved.getDate() + "/" +  dateRecieved.getMonth()+1 + '/' + dateRecieved.getFullYear();
             var clockStr = formatDate(dateRecieved);
 
-            //console.log('date' + dateStr);
             console.log('clock' + clockStr);
             var status =  data.status //high or low
-
-            //console.log ("current date = " + date);
-            //console.log(liveData);
-            //console.log(liveDates);
 
             pushData(status, clockStr);
             fetchData();
@@ -87,6 +92,14 @@ angular.module('dataTracking')
             chart.datasets[0].bars[chart.datasets[0].bars.length-1].fillColor = "green";
             chart.update();
         });
+
+        function checkLastDataEntry (current){
+            //clear the chart array if the upcoming live data is not on the same day as last recorded data (lastEntryDate)
+            if ($scope.dateString !== current ){
+                liveData = [];
+                liveClock = [];
+            }
+        }
 
         function formatDate(date){
             return date.getHours() + ":" +  date.getMinutes() + ':' +date.getSeconds();
