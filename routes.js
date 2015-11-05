@@ -4,8 +4,8 @@
 module.exports = function(app) {
 
     // Insert routes below
-    app.use('/apis/dataApi', require('./routes/api/dataApi'));  // /apis/dataApi/data
-
+    app.use('/apis/dataApi', require('./routes/api/dataApi'));  // /apis/dataApi/HHHHHHHHHHHHHHHH
+    app.use('/notify', require('./routes/api/notify'));  // /notify/
 
     // All undefined asset or api routes should return a 404
     //app.route('/:url(api|auth|components|app|bower_components|assets)/*')

@@ -6,9 +6,12 @@
 angular.module('dataTracking')
     .controller('mainCtrl', function($scope){
 
-        // to make sensdata accessible by the child controller (s)
+        // to make scope variable in mainCTRL  accessible by the child controller (s)
         $scope.parentobj = {};
         $scope.parentobj.sensordata= "";
+        $scope.parentobj.notification= "";
+        $scope.parentobj.startTime= "";
+        $scope.parentobj.endTime= "";
 
         $scope.$watch('parentobj.sensordata', function() {
             console.log('hey, sensor data is ' + $scope.parentobj.sensordata );
@@ -21,24 +24,39 @@ angular.module('dataTracking')
             }
         });
 
-
         ////////////////////////////////////// TIMEPICKER
         //$scope.event = {
         //    startDate: new Date()
         //};
+        //timepicker example : http://mytechtipdemo.appspot.com/timepicker/
 
-        $scope.startTime = new Date();
-        $scope.endTime = new Date();
+        $scope.parentobj.startTime = new Date();
+        $scope.parentobj.endTime = new Date();
 
         $scope.changed = function () {
-
-            $scope.start_time = $scope.startTime;
+            $scope.start_time = $scope.parentobj.startTime;
 
             $scope.end_time = {
-                hour: $scope.endTime.getHours(),
-                min: $scope.endTime.getMinutes()
+                hour: $scope.parentobj.endTime.getHours(),
+                min: $scope.parentobj.endTime.getMinutes()
             };
 
+        //$scope.startTime = new Date();
+        //$scope.endTime = new Date();
+        //
+        //$scope.changed = function () {
+        //    $scope.start_time = $scope.startTime;
+        //
+        //    $scope.end_time = {
+        //        hour: $scope.endTime.getHours(),
+        //        min: $scope.endTime.getMinutes()
+        //    };
+
+            // coming from the dataController (child controller)
+            //var currentDataStamp = $scope.hourMin;
+            //var currentDataStatus =$scope.status;
+            //console.log ("currentDataStamp = " + $scope.hourMin + "currentDataStatus" + $scope.status );
+            //sendNotification ($scope.start_time ,$scope.endTime, currentDataStamp, currentDataStatus);
             console.log("start = " + $scope.start_time + "end = " +  $scope.end_time.min);
         };
 
@@ -48,12 +66,16 @@ angular.module('dataTracking')
             minuteSteps: 15
         };
 
-        //$scope.clicked = function(e) {
-        //    e.preventDefault();
-        //    e.stopPropagation();
-        //};
+        $scope.clicked = function(e) {
+            console.log("clicked event");
+            e.preventDefault();
+            e.stopPropagation();
+        };
         //////////////////////////////////////////////
-
+       // https://codeforgeek.com/2014/07/send-e-mail-node-js/
+       // function sendNotification (start, end, currentTime, currentStatus){
+       //     console.log("start = " + start + "end = " + end +  "currenTime = " + currentTime + "currentStatus = " + currentStatus );
+       // }
 })
 
     .directive('bootstrapSwitch', [
@@ -78,12 +100,13 @@ angular.module('dataTracking')
                         if (newValue) {
                             $( "fieldset" ).prop( "disabled", false );
                             element.bootstrapSwitch('state', true, true);
+                            scope.parentobj.notification = "ON";
                             console.log("ON STATE");
                         } else {
                             console.log("OFF STATE");
-                            console.log(attrs.ngModel);
                             $( "fieldset" ).prop( "disabled", true );
                             element.bootstrapSwitch('state', false, true);
+                            scope.parentobj.notification = "OFF"
                         }
                     });
                 }

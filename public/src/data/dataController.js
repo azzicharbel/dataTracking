@@ -7,7 +7,6 @@
 angular.module('dataTracking')
     .config(['ChartJsProvider', function (ChartJsProvider) {
         // Configure all charts
-
         //scaleSteps and Scale step width forces the data to start to end at 1, and have a step of 1 (1x1=1)
         //Example:]This example creates a bar chart with Y-axis starting at 0 and ending at 900.
         // To do that, step width is set to 100 and number of steps are set to 9.
@@ -29,8 +28,8 @@ angular.module('dataTracking')
             }
         })
     }])
-    .controller('sensorStatus', function($scope, $location, $http, SensorData, $socket){
 
+    .controller('sensorStatus', function($scope, $location, $http, SensorData, $socket){
         var liveData = [];
         var liveClock = [];
 
@@ -62,10 +61,9 @@ angular.module('dataTracking')
         //moment().format();
 
         $socket.on('update', function (data){
-
-
             var dateRecieved = new Date();
-
+            $scope.hourMin = dateRecieved; // saved in a scope variable to be accessed from the mainCtrl
+            console.log("hour min =" + $scope.hourMin);
             //e.g Mon Nov 02 2015
             var dateStr = dateRecieved.toDateString();
             checkLastDataEntry(dateStr);
@@ -76,8 +74,11 @@ angular.module('dataTracking')
             var clockStr = formatDate(dateRecieved);
 
             console.log('clock' + clockStr);
-            var status =  data.status //high or low
+            //saved in a scope variable to be accessed from the mainCtrl
+            $scope.status= data.status;
+            var status =  $scope.status //high or low
 
+            checkNotification(clockStr);
             pushData(status, clockStr);
             fetchData();
         });
@@ -86,8 +87,7 @@ angular.module('dataTracking')
 
         $scope.$on("create", function(evt, chart) {
             //update the last status with color
-
-            console.log(chart);
+            //console.log(chart);
             //console.log($scope.count)
             chart.datasets[0].bars[chart.datasets[0].bars.length-1].fillColor = "green";
             chart.update();
@@ -108,25 +108,61 @@ angular.module('dataTracking')
         function pushData(status, date){
             //change the value of sensordata in the mainrCtrl (parent controller)
             $scope.parentobj.sensordata = status;
-
             if (status === 'ON') {
                 liveData.push(1);
-
             }
             else if (status === 'OFF'){
                 liveData.push(0);
             }
-
             liveClock.push(date);
         }
 
         function fetchData() {
             $scope.labels = liveClock;
             $scope.series = ['Time'];
-
             $scope.data = [
                 liveData
             ];
         }
+
+        function checkNotification(clockStr) {
+            console.log("Inside CheckNotification");
+            console.log($scope.parentobj.notification);
+            if ($scope.parentobj.notification == 'ON') {
+                console.log($scope.parentobj.notification);
+                // setting the date to arbitrary date but keeping th time of data received
+                //and the time set for notification so we could able to do thetime comparison
+                var strIncomingTime = Date.parse('01/01/2011 ' + clockStr);
+                var strStartTime = Date.parse('01/01/2011 ' + formatDate($scope.parentobj.startTime));
+                var strEndTime = Date.parse('01/01/2011 ' + formatDate($scope.parentobj.endTime));
+
+                console.log('strStartTime = ' + strStartTime);
+                console.log('strIncomingTime = ' + strIncomingTime);
+                console.log('strEndTime = ' + strEndTime);
+
+                //if the time of incoming data is in between the time set for notification then send a notification
+                if (strStartTime <= strIncomingTime <= strEndTime) {
+                    console.log(' time comparison');
+                    SensorData.sendEmailNotification()
+                        .success(function (data) {
+                            console.log("Notification was sent to User Id " + data)
+
+                        })
+                        .error(function (error) {
+                            console.log(error + "Failed to send notification");
+                        })
+                }
+            }
+        }
+        //$scope.$watch('parentobj.notification', function() {
+        //    console.log('Notification  ' + $scope.parentobj.notification );
+        //    if ($scope.parentobj.sensordata === "ON"){
+        //        console.log('hey, sensor has changed to green ' + $scope.parentobj.sensordata );
+        //        $("#statusColor" ).css( "color", "green" );
+        //    }else {
+        //        console.log('hey, sensor has changed to red ' + $scope.parentobj.sensordata );
+        //        $("#statusColor" ).css( "color", "red" );
+        //    }
+        //});
     });
 

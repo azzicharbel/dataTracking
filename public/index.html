@@ -1,4 +1,4 @@
-<!--timpicker example : http://mytechtipdemo.appspot.com/timepicker/-->
+<!--timepicker example : http://mytechtipdemo.appspot.com/timepicker/-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,13 +89,13 @@
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
                     <label> Between </label>
                     <fieldset> <!--<fieldset>></fieldset> was added to control the disabling and enabling of timepicker-->
-                        <timepicker data-ng-model="startTime" data-ng-change="changed()" show-meridian='showMeridian' id="startPeriod"/>
+                        <timepicker data-ng-model="parentobj.startTime" data-ng-change="changed()" show-meridian='showMeridian' id="startPeriod"/>
                     </fieldset>
                 </div>
                 <div class=" col-lg-2 col-md-2 col-sm-2 col-xs-2" id="endPeriod">
                     <label> And </label>
                     <fieldset>
-                        <timepicker data-ng-model="endTime" data-ng-change="changed()" show-meridian='showMeridian'/>
+                        <timepicker data-ng-model="parentobj.endTime" data-ng-change="changed()" show-meridian='showMeridian'/>
                     </fieldset>
                 </div>
             </div>
