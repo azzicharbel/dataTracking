@@ -154,15 +154,5 @@ angular.module('dataTracking')
                 }
             }
         }
-        //$scope.$watch('parentobj.notification', function() {
-        //    console.log('Notification  ' + $scope.parentobj.notification );
-        //    if ($scope.parentobj.sensordata === "ON"){
-        //        console.log('hey, sensor has changed to green ' + $scope.parentobj.sensordata );
-        //        $("#statusColor" ).css( "color", "green" );
-        //    }else {
-        //        console.log('hey, sensor has changed to red ' + $scope.parentobj.sensordata );
-        //        $("#statusColor" ).css( "color", "red" );
-        //    }
-        //});
     });
 

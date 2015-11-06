@@ -17,5 +17,3 @@ module.exports = function(app) {
             res.sendfile('/index.html');
         });
 };
-
-//api/dataApi/

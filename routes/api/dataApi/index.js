@@ -8,11 +8,4 @@ var controller = require ('./data.controller');
 ///* GET home page. */
 router.get('/:id', controller.getSensorData);
 router.get('/', controller.getLastDataEntry);
-//{ent
-    //res.send(req.params.id);
-    //res.render('index', { title:req.params.id});
-    //console.log(req.params.id);
-
-//});
-//
 module.exports = router;

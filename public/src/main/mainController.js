@@ -37,26 +37,11 @@ angular.module('dataTracking')
             $scope.start_time = $scope.parentobj.startTime;
 
             $scope.end_time = {
+                //currently not being used
                 hour: $scope.parentobj.endTime.getHours(),
                 min: $scope.parentobj.endTime.getMinutes()
             };
 
-        //$scope.startTime = new Date();
-        //$scope.endTime = new Date();
-        //
-        //$scope.changed = function () {
-        //    $scope.start_time = $scope.startTime;
-        //
-        //    $scope.end_time = {
-        //        hour: $scope.endTime.getHours(),
-        //        min: $scope.endTime.getMinutes()
-        //    };
-
-            // coming from the dataController (child controller)
-            //var currentDataStamp = $scope.hourMin;
-            //var currentDataStatus =$scope.status;
-            //console.log ("currentDataStamp = " + $scope.hourMin + "currentDataStatus" + $scope.status );
-            //sendNotification ($scope.start_time ,$scope.endTime, currentDataStamp, currentDataStatus);
             console.log("start = " + $scope.start_time + "end = " +  $scope.end_time.min);
         };
 
@@ -72,10 +57,6 @@ angular.module('dataTracking')
             e.stopPropagation();
         };
         //////////////////////////////////////////////
-       // https://codeforgeek.com/2014/07/send-e-mail-node-js/
-       // function sendNotification (start, end, currentTime, currentStatus){
-       //     console.log("start = " + start + "end = " + end +  "currenTime = " + currentTime + "currentStatus = " + currentStatus );
-       // }
 })
 
     .directive('bootstrapSwitch', [
