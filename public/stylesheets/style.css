@@ -1,7 +1,27 @@
 body {
+  /*min-height: 2000px;*/
   padding-top: 70px;
 }
 
+
 a {
   color: #00B7FF;
+}
+
+@media (max-width: 978px) {
+  /*.container {*/
+    /*/!*padding:0;*!/*/
+    /*/!*margin:0;*!/*/
+    /*width:100%*/
+  /*}*/
+
+  /*body {*/
+    /*padding:0;*/
+  /*}*/
+
+  /*.navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {*/
+    /*margin-left: 0;*/
+    /*margin-right: 0;*/
+    /*margin-bottom:0;*/
+  /*}*/
 }

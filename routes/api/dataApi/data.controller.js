@@ -46,21 +46,19 @@ exports.getSensorData = function (req,res){
 };
 
 exports.getLastDataEntry = function(req,res){
-
+    //get the latest data entry
     console.log('inFind');
     DbSensorData.find().sort( { _id : -1 } ).limit(1).exec(function(err, data){
         console.log("get last data" + data);
         res.json(data);
         return data;
     });
-
     //DbSensorData.find().skip(DbSensorData.count()).exec(function(err, datas){
     //    console.log("get last data" + datas);
     //});
-
-
     //if (story.lines.length &&
     //    story.lines[story.lines.length-1].user === socket.username) {
     //    // error, same user is trying to enter another line
     //}
-}
+};
+

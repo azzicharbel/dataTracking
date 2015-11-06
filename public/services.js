@@ -9,7 +9,6 @@ config.api = {};
 config.api.base_url = "";
 
 appServices.factory('SensorData', function($http) {
-    var id = "ID4";
     return {
 
         //did not call this function yet from the client
@@ -19,6 +18,11 @@ appServices.factory('SensorData', function($http) {
 
         getLastDataEntry: function(){
             return $http.get(config.api.base_url + '/apis/dataApi');
+        },
+
+        sendEmailNotification: function(){
+            var tempId = "111";
+            return $http.get(config.api.base_url + '/notify/' + tempId);
         }
     }
 });
