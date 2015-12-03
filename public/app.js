@@ -15,7 +15,8 @@ var app = angular.module('dataTracking', [
 var appServices = angular.module('appServices', []);
 
 app.config(function($socketProvider){
-    $socketProvider.setConnectionUrl('http://localhost:8080');
+    //$socketProvider.setConnectionUrl('http://localhost:8080');
+    $socketProvider.setConnectionUrl('http://68.227.1.131:8080');
 });
 
 //app.config(function ($httpProvider) {

@@ -5,8 +5,7 @@
 'use strict';
 
 var config = {};
-config.api = {};
-config.api.base_url = "";
+config.api = {};config.api.base_url = "http://68.227.1.131:8080";
 
 appServices.factory('SensorData', function($http) {
     return {

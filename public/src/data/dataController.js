@@ -61,6 +61,7 @@ angular.module('dataTracking')
         //moment().format();
 
         $socket.on('update', function (data){
+            console.log("------socket update------")
             var dateRecieved = new Date();
             $scope.hourMin = dateRecieved; // saved in a scope variable to be accessed from the mainCtrl
             console.log("hour min =" + $scope.hourMin);
