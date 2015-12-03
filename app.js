@@ -26,7 +26,7 @@ var server = app.listen(8080, function () {
 });
 
 var io = socketio.listen(server);
-
+//io.connect('68.227.1.131');
 io.on('connection', function(socket){
   console.log('a user connected');
 });

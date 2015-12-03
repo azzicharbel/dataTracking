@@ -39,6 +39,7 @@ exports.getSensorData = function (req,res){
         //////call the controller with the updated data
         var io = req.app.get('socketio');
         io.sockets.emit('update', {status :saveData, date: dateReceived});
+        console.log("-------socket emit------");
     }
     else {
         console.log("Invalid data and cannot be added to the database");
@@ -47,7 +48,7 @@ exports.getSensorData = function (req,res){
 
 exports.getLastDataEntry = function(req,res){
     //get the latest data entry
-    console.log('inFind');
+    console.log('-----getLastDataEntry()-----');
     DbSensorData.find().sort( { _id : -1 } ).limit(1).exec(function(err, data){
         console.log("get last data" + data);
         res.json(data);
